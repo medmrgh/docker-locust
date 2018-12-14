@@ -1,0 +1,8 @@
+# general things to ignore
+__pycache__/
+*.so
+*~
+*.pytest_cache
+*.pytest_cache/
+.pytest_cache/*
+.pytest_cache*
