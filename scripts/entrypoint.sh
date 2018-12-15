@@ -3,7 +3,7 @@
 set -e
 LOCUST_MODE=${LOCUST_MODE:-standalone}
 LOCUST_MASTER_BIND_PORT=${LOCUST_MASTER_BIND_PORT:-5557}
-LOCUST_FILE=${LOCUST_FILE:-default_locustfile.py}
+LOCUST_FILE=${LOCUST_FILE:-locustfile.py}
 
 if [ -z ${ATTACKED_HOST+x} ] ; then
     echo "You need to set the URL of the host to be tested (ATTACKED_HOST)."
