@@ -14,12 +14,12 @@ jobs:
           command: apk add curl
       - run: 
           name: Build docker image
-          command: docker build -t medmrgh/docker-locust:test .
+          command: docker build -t medmrgh/medmrgh/docker-locust:circleci_test .
       - run: 
           name: Start locust
           command: >
             docker run -it --rm --entrypoint="/bin/sh" 
-            medmrgh/docker-locust -c "locust --version" | 
+            medmrgh/docker-locust:circleci_test -c "locust --version" | 
             grep 0.9.0
   
 workflows:
