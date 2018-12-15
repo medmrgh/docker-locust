@@ -1,6 +1,7 @@
 FROM python:3.6-alpine
 LABEL maintainer="medmrgh"
 
+COPY Dockerfile /
 COPY /scripts/entrypoint.sh /
 
 RUN    apk --no-cache add --virtual=.build-dep build-base \
@@ -10,6 +11,7 @@ RUN    apk --no-cache add --virtual=.build-dep build-base \
     && chmod +x /entrypoint.sh
 
 RUN  mkdir /locust
+
 WORKDIR /locust
 EXPOSE 8089 5557 5558
 

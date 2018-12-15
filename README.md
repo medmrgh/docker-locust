@@ -1,5 +1,7 @@
 # Docker-locust
 
+[![CircleCI](https://circleci.com/gh/medmrgh/docker-locust/tree/master.svg?style=svg)](https://circleci.com/gh/medmrgh/docker-locust/tree/master)
+
 This repository contains Dockerfile of locust for Docker's automated build.
 
 ## What is locust ?

@@ -1,0 +1,30 @@
+version: 2
+
+jobs:
+  build_and_test:
+    docker:
+      - image: docker:18.06.1-ce-git
+    working_directory: ~/docker-locust
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: 
+          name: Install requirements
+          command: apk add curl
+      - run: 
+          name: Build docker image
+          command: docker build -t medmrgh/docker-locust:circleci_test .
+      - run: 
+          name: Start locust
+          command: >
+            docker run -it --rm --entrypoint="/bin/sh" 
+            medmrgh/docker-locust:circleci_test -c "locust --version" | 
+            grep 0.9.0
+  
+workflows:
+  version: 2
+  build_run_test:
+    jobs:
+      - build_and_test
+
