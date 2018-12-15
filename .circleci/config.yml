@@ -20,7 +20,7 @@ jobs:
           command: >
             docker run --name standalone
             --hostname standalone -e ATTACKED_HOST=http://standalone:8089
-            -v ~/docker-locust/locust-scripts:/locust -p 8089:8089 -d medmrgh/docker-locust:dtest
+            -v ~/docker-locust/locust-scripts:/locust -p 8089:8089 -d medmrgh/docker-locust:test
       - run: 
           name: Test http response
           command: curl -I http://localhost:8089 | grep "200 OK"
