@@ -1,0 +1,30 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: docker:18.06.1-ce-git
+    working_directory: ~/docker-locust
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: docker build -t medmrgh/docker-locust:test .
+  test:
+    docker:
+      - image: docker:18.06.1-ce-git
+    steps:
+      - setup_remote_docker
+      - run: docker run --rm --name standalone \
+            --hostname standalone -e ATTACKED_HOST=http://standalone:8089 \
+            -v ~/docker-locust:/locust -p 8089:8089 -d medmrgh/docker-locust:test
+      - run: curl -I http://localhost:8089 | grep "200 OK"
+      
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
