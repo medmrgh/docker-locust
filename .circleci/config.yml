@@ -14,7 +14,7 @@ jobs:
           command: apk add curl
       - run: 
           name: Build docker image
-          command: docker build -t medmrgh/medmrgh/docker-locust:circleci_test .
+          command: docker build -t medmrgh/docker-locust:circleci_test .
       - run: 
           name: Start locust
           command: >
