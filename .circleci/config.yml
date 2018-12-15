@@ -10,7 +10,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker build -t medmrgh/docker-locust:test .
-  run:
+  run_locust:
     docker:
       - image: docker:18.06.1-ce-git
     steps:
@@ -31,9 +31,9 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - run
+      - run_locust
         requires:
             - build
       - test:
           requires:
-            - run
+            - run_locust
