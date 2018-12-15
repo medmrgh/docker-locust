@@ -10,14 +10,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker build -t medmrgh/docker-locust:test .
+  run:
+    docker:
+      - image: docker:18.06.1-ce-git
+    steps:
+      - setup_remote_docker
+      - run: >
+          docker run --rm --name standalone
+          --hostname standalone -e ATTACKED_HOST=http://standalone:8089
+          -v ~/docker-locust:/locust -p 8089:8089 -d medmrgh/docker-locust:test
   test:
     docker:
       - image: docker:18.06.1-ce-git
     steps:
       - setup_remote_docker
-      - run: docker run --rm --name standalone \
-            --hostname standalone -e ATTACKED_HOST=http://standalone:8089 \
-            -v ~/docker-locust:/locust -p 8089:8089 -d medmrgh/docker-locust:test
       - run: curl -I http://localhost:8089 | grep "200 OK"
       
 workflows:
@@ -25,6 +31,9 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - run
+        requires:
+            - build
       - test:
           requires:
-            - build
+            - run
