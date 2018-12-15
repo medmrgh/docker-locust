@@ -11,7 +11,6 @@ RUN    apk --no-cache add --virtual=.build-dep build-base \
     && chmod +x /entrypoint.sh
 
 RUN  mkdir /locust
-COPY /locust-scripts/locustfile.py /locust
 
 WORKDIR /locust
 EXPOSE 8089 5557 5558
