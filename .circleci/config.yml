@@ -10,10 +10,13 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: 
+          name: Install requirements
+          command: apk add curl
+      - run: 
           name: Build docker image
           command: docker build -t medmrgh/docker-locust:test .
       - run: 
-          name: start locust
+          name: Start locust
           command: >
             docker run --rm --name standalone
             --hostname standalone -e ATTACKED_HOST=http://standalone:8089
